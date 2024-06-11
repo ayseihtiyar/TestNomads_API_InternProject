@@ -1,19 +1,18 @@
 package US_001;
 
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.http.Cookies;
+import io.restassured.http.*;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 
 public class US_001 {
+
     RequestSpecification reqSpec;
+
     @Test
     public void login() {
         baseURI = "https://test.mersys.io";
@@ -26,14 +25,11 @@ public class US_001 {
                 given()
                         .body(userCredential)
                         .contentType(ContentType.JSON)
-
                         .when()
-
                         .post("/auth/login")
                         .then()
                         .statusCode(200)
                         .extract().response().getDetailedCookies();
-
         reqSpec = new RequestSpecBuilder()
                 .addCookies(cookies)
                 .setContentType(ContentType.JSON)
@@ -52,14 +48,11 @@ public class US_001 {
                 given()
                         .body(userCredential)
                         .contentType(ContentType.JSON)
-
                         .when()
-
                         .post("/auth/login")
                         .then()
                         .statusCode(401)
                         .extract().response().getDetailedCookies();
-
         reqSpec = new RequestSpecBuilder()
                 .addCookies(cookies)
                 .setContentType(ContentType.JSON)
