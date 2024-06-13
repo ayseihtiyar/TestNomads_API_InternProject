@@ -3,12 +3,12 @@ package US_101;
 import Utility.BaseParameter;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
 public class US_101 extends BaseParameter {
+
     String statesID;
 
     @Test
@@ -25,7 +25,7 @@ public class US_101 extends BaseParameter {
     @Test
     public void Add() {
         Map<String, Object> newStates = new HashMap<>();
-        newStates.put("name", randomGenerator.educator().course());
+        newStates.put("name", randomGenerator.address().state());
         Map<String, String> country = new HashMap<>();
         country.put("id", countryId);
         newStates.put("country", country);
@@ -39,28 +39,26 @@ public class US_101 extends BaseParameter {
                         .log().body()
                         .statusCode(201)
                         .extract().path("id");
-        System.out.println(statesID);
     }
 
-        @Test(dependsOnMethods = "Add")
-        public void Edit() {
-            Map<String, Object> newStates = new HashMap<>();
-            newStates.put("id", statesID);
-            newStates.put("name", randomGenerator.educator().course());
-            Map<String, String> country = new HashMap<>();
-            country.put("id", countryId);
-            newStates.put("country", country);
+    @Test(dependsOnMethods = "Add")
+    public void Edit() {
+        Map<String, Object> newStates = new HashMap<>();
+        newStates.put("id", statesID);
+        newStates.put("name", randomGenerator.address().state());
+        Map<String, String> country = new HashMap<>();
+        country.put("id", countryId);
+        newStates.put("country", country);
 
-            given()
-                    .spec(reqSpec)
-                    .body(newStates)
-                    .when()
-                    .put("/school-service/api/states")
-                    .then()
-                    .log().body()
-                    .statusCode(200);
-
-        }
+        given()
+                .spec(reqSpec)
+                .body(newStates)
+                .when()
+                .put("/school-service/api/states")
+                .then()
+                .log().body()
+                .statusCode(200);
+    }
 
     @Test(dependsOnMethods = "Edit")
     public void Delete() {
@@ -71,12 +69,5 @@ public class US_101 extends BaseParameter {
                 .delete("/school-service/api/states/" + statesID)
                 .then()
                 .statusCode(200);
-
     }
 }
-
-
-
-
-
-
