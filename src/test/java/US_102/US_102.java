@@ -16,14 +16,12 @@ public class US_102 extends BaseParameter {
 
     @Test
     public void List() {
-        String X = "{\n" +
-                "    \"name\": \"\"\n" +
-                "}";
+        Map<String, String> Name = new HashMap<>();
+        Name.put("name", "");
 
         given()
                 .spec(reqSpec)
-                .body(X)
-              //  .contentType(ContentType.JSON)
+                .body(Name)
                 .when()
                 .post("/school-service/api/cities/search")
                 .then()
@@ -31,18 +29,16 @@ public class US_102 extends BaseParameter {
                 .statusCode(200)
         ;
     }
-
     @Test
     public void Add() {
-        String newCities ="{\n" +
-                "    \"id\": null,\n" +
-                "    \"name\": \"{{$randomCity}}\",\n" +
-                "    \"country\": {\n" +
-                "        \"id\": \"{{CountryID}}\"\n" +
-                "    },\n" +
-                "    \"state\": null,\n" +
-                "    \"translateName\": []\n" +
-                "}";
+        Map<String, Object> newCities = new HashMap<>();
+        newCities.put("name", randomGenerator.address().cityName());
+        Map<String, String> country = new HashMap<>();
+        country.put("id", countryId);
+        newCities.put("country", country);
+        Map<String, String> states = new HashMap<>();
+        states.put("id", "666aecf1fd4acd175ea7ea85");
+        newCities.put("state", states);
 
         citiesID =
                 given()
@@ -60,18 +56,19 @@ public class US_102 extends BaseParameter {
 
     @Test(dependsOnMethods = "Add")
     public void Edit() {
-        String editCitie = "{\n" +
-                "    \"id\": \"{{CitiesID}}\",\n" +
-                "    \"name\": \"{{$randomCity}}\",\n" +
-                "    \"country\": {\n" +
-                "        \"id\": \"{{CountryID}}\"\n" +
-                "    },\n" +
-                "    \"state\": null,\n" +
-                "    \"translateName\": []\n" +
-                "}";
+        Map<String, Object> newCities = new HashMap<>();
+        newCities.put("id", citiesID);
+        newCities.put("name", randomGenerator.address().cityName());
+        Map<String, String> country = new HashMap<>();
+        country.put("id", countryId);
+        newCities.put("country", country);
+        Map<String, String> states = new HashMap<>();
+        states.put("id", "666aecf1fd4acd175ea7ea85");
+        newCities.put("state", states);
+
         given()
                 .spec(reqSpec)
-                .body(editCitie)
+                .body(newCities)
                 .when()
                 .put("/school-service/api/cities")
                 .then()
@@ -86,11 +83,9 @@ public class US_102 extends BaseParameter {
         given()
                 .spec(reqSpec)
                 .when()
-                .delete("/school-service/api/cities" + citiesID)
+                .delete("/school-service/api/cities/"+citiesID)
                 .then()
                 .statusCode(200)
         ;
     }
-
-
 }
