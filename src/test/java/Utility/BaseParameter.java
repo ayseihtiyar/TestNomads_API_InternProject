@@ -17,6 +17,7 @@ public class BaseParameter {
     public RequestSpecification reqSpec;
     public Faker randomGenerator = new Faker();
     public String schoolID = "6576fd8f8af7ce488ac69b89";
+    public String countryId ="632cfcea0d5736269c5aa7c1";
 
     @BeforeClass
     public void login() {

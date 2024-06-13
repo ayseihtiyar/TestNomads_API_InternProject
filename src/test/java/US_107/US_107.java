@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 public class US_107 extends BaseParameter {
 
@@ -32,6 +33,7 @@ public class US_107 extends BaseParameter {
                 .then()
                 .log().body()
                 .statusCode(200)
+                .body("content.'id'", not(hasItem("658ef7edcacea97f2a0cb065")))
         ;
     }
 }
