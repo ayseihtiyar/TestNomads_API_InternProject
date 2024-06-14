@@ -4,10 +4,7 @@ import Utility.BaseParameter;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 

@@ -3,8 +3,7 @@ package US_103;
 import Utility.BaseParameter;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -36,11 +35,8 @@ public class US_103 extends BaseParameter {
                 .then()
                 .statusCode(201)
                 .extract().path("id");
-
-        System.out.println("id:" + userId);
     }
 
-    //666c8c595941ea262d32cad9
     @Test
     public void ListExams() {
         Map<String, String> infos = new HashMap<>();

@@ -3,8 +3,7 @@ package US_002;
 import Utility.BaseParameter;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
